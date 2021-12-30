@@ -1,0 +1,49 @@
+<div class="rightMenu">
+    <div class="rightMenuBlock1">Настройки новостей</div>
+    <form>
+        <div class="rightMenuBlock2">
+
+            <div class="rightMenuItem">
+                <span class="blue m-2 mb-3"><i class="fas fa-font" style="margin-right:1em;"></i> Источники</span>
+                <div class="form-group mt-2" style="padding: 0.6em 0.2em">
+                    <div>
+                        <p><a class="news_type_text" href="{% url 'core:news' %}?filter_news_type=0">Яндекс Новости</a>
+                        </p>
+                    </div>
+                    <div>
+                        <p><a class="news_type_text" href="{% url 'core:news' %}?filter_news_type=1">Вконтакте</a></p>
+                    </div>
+                    <div>
+                        <p><a class="news_type_text" href="{% url 'core:news' %}?filter_news_type=0,1">Все</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rightMenuItem">
+                <span class="blue"><i class="fas fa-clock" style="margin-right:1em;"></i> Время</span>
+                <div class="form-group mt-2" style="padding: 0.6em 0.2em">
+                    <div>
+                        <p><a class="news_type_text" href="{% url 'core:news' %}?order=">Сначала новые</a></p>
+                    </div>
+                    <div>
+                        <p><a class="news_type_text" href="{% url 'core:news' %}?order=">Сначала старые</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rightMenuItem">
+                <span class="blue"><i class="fas fa-exclamation" style="margin-right:1em;"></i> Важность</span>
+                <div class="form-group mt-2" style="padding: 0.6em 0.2em">
+                    <div>
+                        <p><a class="news_type_text" href="{% url 'core:news' %}?priority=">Сначала важные</a></p>
+                    </div>
+                    <div>
+                        <p><a class="news_type_text" href="{% url 'core:news' %}?priority=">Сначала неважные</a></p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </form>
+</div>

@@ -1,0 +1,1 @@
+celery -A tatar_analysis worker -l info --pool=solo

@@ -1,0 +1,76 @@
+{% extends 'core/base.html' %}
+
+{% block title %}
+    VK новости
+{% endblock %}
+{% block container %}
+    {% load humanize %}
+    <div class="main" id="main">
+
+        {% for source in object_list %}
+            <div class="shadow p-3 m-4 news-block rounded">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="key-word-{{ source.id }}"
+                            {% if source.is_active %} checked=true {% endif %} data-id={{ source.id }}>
+
+                    <label class="form-check-label font-weight-normal mx-2"
+                           for="key-word-{{ source.id }}">
+                        <h5>{{ source.name }}</h5>
+                        <p>
+                            <a href="{{ source.link }}">Ссылка на источник</a>
+                        </p></label>
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="pagination shadow p-4 m-4 pt-3 mt-3 news-block rounded">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1" class="border rounded btn btn-outline-dark">1</a>
+                    <a href="?page={{ page_obj.previous_page_number }}" class="border rounded btn btn-outline-dark">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    <a href="" class="border rounded btn btn-outline-primary">{{ page_obj.number }}</a>
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" class="border rounded btn btn-outline-dark">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}"
+                       class="border rounded btn btn-outline-dark">{{ page_obj.paginator.num_pages }}</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            //add ajax stuff
+            {% include 'core/includes/ajax_setup.html' %}
+
+            $('.form-check-input').click(function (event) {
+                event.stopPropagation();
+                const key_word_id = $(this).attr('data-id');
+                const is_active = $(this).is(':checked') ? 'True' : 'False';
+
+                const data = {
+                    'type': 'vk',
+                    'key_id': key_word_id,
+                    'is_active': is_active,
+                };
+
+                $.ajax({
+                    url: '{% url 'core:toggle_active_key' %}',
+                    method: 'POST',
+                    data: data,
+                    content_type: 'application/json',
+                    type: 'json',
+                    success: (data) => console.log(data),
+                    error: (data) => console.log(data),
+                });
+
+
+            });
+        });
+    </script>
+{% endblock %}

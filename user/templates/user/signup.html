@@ -1,0 +1,26 @@
+{% extends "user/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Registration{% endblock %}
+
+{% block content %}
+    <div class="container vh-100">
+        <div class="row vh-100">
+            <div class="col-lg-6 col-md-12 col-sm-12">
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12 d-flex align-items-center ">
+                <div class="col-10 offset-1 shadow-sm leftReg p-5">
+                    <h2><b>Registration</b></h2>
+                    <form method="post">
+
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <button class="btn btn-outline-primary" type="submit">Create account</button>
+                        <a class="btn btn-outline-secondary" href="{% url 'user:login' %}">Login</a>
+                        <p class="font-weight-lighter my-2">* - required fields</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
