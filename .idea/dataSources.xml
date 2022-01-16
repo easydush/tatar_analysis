@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:postgresql://localhost:5432/tatar</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="tatar@localhost [2]" uuid="e8c5aa4b-eda8-4efb-b672-c61687ef8065">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/tatar</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

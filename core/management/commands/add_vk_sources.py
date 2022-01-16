@@ -1,7 +1,6 @@
 import csv
 import argparse
-import datetime
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from django.db.utils import IntegrityError
 
 from core.models import VKSource

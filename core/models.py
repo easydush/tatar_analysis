@@ -1,87 +1,22 @@
-from datetime import datetime
-
 from django.db import models
 from django.db.models import Manager
 
 MAX_LENGTH = 255
 
 
-class UncheckedYandexNewsItem(models.Manager):
-    def get_queryset(self):
-        return super().get_queryset().filter(checked=False)
-
-
-class YandexNewsTopic(models.Model):
-    name = models.CharField(max_length=500, db_index=True)
-    rss_url = models.URLField()
-    is_active = models.BooleanField(default=True)
-
-    def __str__(self):
-        return f'{self.name} - [{self.rss_url}]'
-
-    class Meta:
-        ordering = ('name',)
-        unique_together = ('name', 'rss_url')
-
-
-class YandexNewsItem(models.Model):
+class Article(models.Model):
     title = models.CharField(max_length=300)
-    link = models.URLField(max_length=350, unique=True)
-    pub_date = models.DateTimeField()
-    hash = models.CharField(max_length=100, unique=True)
-    checked = models.BooleanField(default=False)
-
-    objects = Manager()
-    unchecked = UncheckedYandexNewsItem()
-
-    def __str__(self):
-        return f'{self.title} [{self.pub_date}] [{self.checked}] [{self.hash}] [{self.link}]'
-
-
-class TriggerPhrase(models.Model):
-    name = models.CharField(max_length=300, unique=True)
-    is_active = models.BooleanField(default=True)
-
-    def __str__(self):
-        return f'{self.name}'
-
-
-class TriggerNews(models.Model):
-    YANDEX = 0
-    VK = 1
-    NEWS_TYPE_CHOICES = (
-        (YANDEX, 0),
-        (VK, 1)
-    )
-    POSITIVE = 0
-    NEGATIVE = 1
-    SKIP = 2
-    NEUTRAL = 3
-    UNKNOWN = 4
-    TONE_TYPE_CHOICES = (
-        (POSITIVE, 0),
-        (NEGATIVE, 1),
-        (SKIP, 2),
-        (NEUTRAL, 3),
-        (UNKNOWN, 4),
-    )
-    title = models.CharField(max_length=300)
+    author = models.CharField(max_length=MAX_LENGTH)
     article_link = models.URLField()
-    last_update = models.DateTimeField(default=datetime.now)
-    description = models.TextField(blank=True)
+    file = models.CharField(max_length=MAX_LENGTH)
+    text = models.TextField(blank=True)
     rate = models.PositiveIntegerField(default=0)
-    trigger_word = models.ManyToManyField(TriggerPhrase)
-    news_type = models.IntegerField(choices=NEWS_TYPE_CHOICES, default=YANDEX)
-    tone_type = models.SmallIntegerField(choices=TONE_TYPE_CHOICES, default=NEUTRAL)
-    tone_value = models.FloatField(default=1.0)
 
     def __str__(self):
-        return f'{self.title} [{self.rate}] [type - {self.news_type}]- [{self.article_link}]'
+        return f'{self.title} [{self.rate}] - [{self.article_link}]'
 
     class Meta:
-        ordering = ('-last_update', '-rate')
-        verbose_name = 'Trigger news'
-        verbose_name_plural = 'Trigger news'
+        ordering = ('author',)
 
 
 class UncheckedVKPost(models.Manager):

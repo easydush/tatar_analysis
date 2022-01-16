@@ -15,6 +15,7 @@ class VKParser:
         self.session = vk.Session()
         self.api = vk.API(self.session)
         self.ACCESS_TOKEN = config('ACCESS_TOKEN')
+
     def parse_group(self, vk_id):
         response = self.api.groups.getById(access_token=self.ACCESS_TOKEN, v='5.81',
                                            lang='ru', group_ids=vk_id,

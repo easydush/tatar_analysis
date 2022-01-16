@@ -3,9 +3,9 @@ import json
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.views import View
-from django.views.generic import TemplateView, ListView
+from django.views.generic import ListView
 
-from core.models import TriggerNews, TriggerPhrase, YandexNewsTopic, VKGroup
+from core.models import Article, VKGroup
 
 
 # class HomeView(LoginRequiredMixin, TemplateView):
@@ -25,7 +25,7 @@ class NewsView(LoginRequiredMixin, ListView):
     Main page with all main information
     """
     template_name = 'core/news.html'
-    model = TriggerNews
+    model = Article
     paginate_by = 4
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -34,7 +34,7 @@ class NewsView(LoginRequiredMixin, ListView):
         return context_data
 
     def get_queryset(self):
-        queryset = TriggerNews.objects.all()
+        queryset = Article.objects.all()
         filter_word = self.request.GET.get('filter_word', None)
         if filter_word:
             queryset = queryset.filter(trigger_word__name=filter_word)
@@ -51,27 +51,12 @@ class KeyWords(LoginRequiredMixin, ListView):
     Page with all key words
     """
     template_name = 'core/key_words.html'
-    model = TriggerPhrase
+    model = Article
     paginate_by = 10
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context_data = super().get_context_data(**kwargs)
         context_data['key_words_page'] = True
-        return context_data
-
-
-class YandexNewsSource(LoginRequiredMixin, ListView):
-    """
-    Page with yandex news sources
-    """
-
-    template_name = 'core/yandex_news.html'
-    model = YandexNewsTopic
-    paginate_by = 6
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context_data = super().get_context_data(**kwargs)
-        context_data['yandex_source'] = True
         return context_data
 
 
@@ -101,11 +86,7 @@ class ToggleActiveKey(LoginRequiredMixin, View):
             key_type = request.POST.get('type', None)
             is_active = request.POST.get('is_active', None)
             keyword = None
-            if key_type == 'word':
-                keyword = TriggerPhrase.objects.get(id=key_id)
-            elif key_type == 'yandex':
-                keyword = YandexNewsTopic.objects.get(id=key_id)
-            elif key_type == 'vk':
+            if key_type == 'vk':
                 keyword = VKGroup.objects.get(id=key_id)
             try:
                 keyword.is_active = is_active
