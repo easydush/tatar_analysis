@@ -6,7 +6,6 @@ from tatar_analysis.settings import MEDIA_ROOT
 from bs4 import BeautifulSoup
 
 
-
 def get_page_with_works(faculty, finish_year, page, p_qt, p_ks):
     result = requests.post(
         "https://shelly.kpfu.ru/pls/iias/student_diplom_g",
@@ -75,16 +74,11 @@ def download_parse(faculty, finish_year):
                     theme = i[1]
                     url_link = i[2]
                     download_file(url_link)
-                    try:
-                        out = parse_pdf(
-                            os.path.join(MEDIA_ROOT, "uploads", "work.pdf")
-                        )
-                        print(student_name, out, theme)
-                    except:
-                        print(student_name)
-                        continue
 
-
+                    out = parse_pdf(
+                        os.path.join(MEDIA_ROOT, "uploads", "work.pdf")
+                    )
+                    print(out)
 
 
 if __name__ == "__main__":
