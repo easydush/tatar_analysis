@@ -1,6 +1,8 @@
 import requests
 import os
 
+
+from core.models import Article
 from parsers.pdf_parser import parse_pdf
 from tatar_analysis.settings import MEDIA_ROOT
 from bs4 import BeautifulSoup
@@ -78,8 +80,5 @@ def download_parse(faculty, finish_year):
                     out = parse_pdf(
                         os.path.join(MEDIA_ROOT, "uploads", "work.pdf")
                     )
-                    print(out)
-
-
-if __name__ == "__main__":
-    download_parse(9023, 2020)
+                    article = Article.objects.create(author=student_name, title=theme, article_link=url_link, text=out)
+                    print(article.author)

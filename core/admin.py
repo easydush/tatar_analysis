@@ -24,5 +24,5 @@ class VKGroupAdmin(admin.ModelAdmin):
 
 @admin.register(VKPost)
 class VKPostAdmin(admin.ModelAdmin):
-    list_display = ['id', 'owner_id', 'address', 'likes', 'reposts', 'comments', 'checked']
-    search_fields = ['id', 'owner_id', 'pub_date']
+    list_display = ['id', 'owner_id', 'address']
+    search_fields = ['id', 'owner_id']

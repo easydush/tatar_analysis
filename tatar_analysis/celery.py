@@ -15,20 +15,6 @@ app = Celery('get_news', broker=settings.CELERY_BROKER_URL)
 app.config_from_object("django.conf:settings", namespace="CELERY")
 
 app.conf.beat_schedule = {
-    # update news from rss page
-    'add-update-news-items': {
-        'task': 'core.tasks.update_news_items',
-        # every 5 min
-        # todo: update time
-        'schedule': crontab(minute='*/2'),
-    },
-    # task to check news for trigger words
-    'add-check-news-for-trigger-words': {
-        'task': 'core.tasks.check_yandex_news_for_trigger_words',
-        # every minute
-        # todo: update time
-        'schedule': crontab(minute='*/2'),
-    },
     # update vk news
     'add-update-vk-news': {
         'task': 'core.tasks.update_vk_content',
@@ -37,8 +23,8 @@ app.conf.beat_schedule = {
         'schedule': crontab(minute='*/2'),
     },
     # task to check news for trigger words
-    'add-check-vk-news-for-trigger-words': {
-        'task': 'core.tasks.check_vk_news_for_trigger_words',
+    'add-update-kpfu-content': {
+        'task': 'core.tasks.update_kpfu_content',
         # every minute
         # todo: update time
         'schedule': crontab(minute='*/2'),

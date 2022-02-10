@@ -19,11 +19,6 @@ class Article(models.Model):
         ordering = ('author',)
 
 
-class UncheckedVKPost(models.Manager):
-    def get_queryset(self):
-        return super().get_queryset().filter(checked=False)
-
-
 class VKSource(models.Model):
     name = models.CharField(max_length=MAX_LENGTH)
     vk_id = models.CharField(max_length=32, primary_key=True, unique=True)
@@ -64,18 +59,9 @@ class VKPost(models.Model):
         blank=False,
         unique=True
     )
-    pub_date = models.DateField()
     text = models.TextField(blank=True, null=True)
-    comments = models.PositiveIntegerField()
-    likes = models.PositiveIntegerField()
-    reposts = models.PositiveSmallIntegerField()
-    checked = models.BooleanField(default=False)
     objects = Manager()
-    unchecked = UncheckedVKPost()
 
     def save(self, *args, **kwargs):
         self.address = f'https://vk.com/wall-{self.owner.vk_id}_{self.id}'
         super(VKPost, self).save(*args, **kwargs)
-
-    class Meta:
-        ordering = ('-pub_date',)

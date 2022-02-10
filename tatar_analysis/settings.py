@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'core',
     'parsers',
-    'user.apps.UserConfig',
+    'user',
     'crispy_forms',
     'django_filters',
 ]
