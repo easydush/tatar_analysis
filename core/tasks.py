@@ -16,5 +16,7 @@ def update_vk_content():
 
 @app.task
 def update_kpfu_content():
-    for year in range(2017, 2020):
-        download_parse(9023, year)
+    specialitites = ['6343']
+    for specialitity in specialitites:
+        for year in range(2017, 2021):
+            download_parse(specialitity, year)

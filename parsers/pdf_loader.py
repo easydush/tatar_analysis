@@ -8,14 +8,14 @@ from tatar_analysis.settings import MEDIA_ROOT
 from bs4 import BeautifulSoup
 
 
-def get_page_with_works(faculty, finish_year, page, p_qt, p_ks):
+def get_page_with_works(speciality, finish_year, page, p_qt, p_ks):
     result = requests.post(
         "https://shelly.kpfu.ru/pls/iias/student_diplom_g",
         data={
-            "p_faculty": str(faculty),
+            "p_faculty": '9023',
             "p_finish_year": str(finish_year),
             "p_poisk": "1",
-            "p_speciality": "6344",
+            "p_speciality": str(speciality),
             "p_page": str(page),
             "p_qt": p_qt,
             "p_ks": p_ks,

@@ -55,7 +55,6 @@ class VKParser:
                     new_post = VKPost(
                         id=post['id'],
                         owner=VKGroup.objects.get(vk_id=abs(post['owner_id'])),
-                        pub_date=datetime.fromtimestamp(post['date']),
                         text=post['text'],
                         comments=post['comments']['count'],
                         likes=post['likes']['count'],
