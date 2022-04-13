@@ -1,6 +1,6 @@
 import logging
 from core.vk.vk_parser import VKParser
-from parsers.pdf_loader import download_parse
+from parsers.kpfu_parser import download_parse
 from tatar_analysis.celery import app
 
 # Get an instance of a logger

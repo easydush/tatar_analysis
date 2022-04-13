@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'parsers',
     'user',
     'crispy_forms',
+    'rest_framework',
     'django_filters',
 ]
 
@@ -148,3 +149,11 @@ AUTH_USER_MODEL = 'user.User'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGOUT_REDIRECT_URL = reverse_lazy('user:login')
 LOGIN_REDIRECT_URL = reverse_lazy('core:news')
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
