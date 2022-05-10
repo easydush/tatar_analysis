@@ -13,19 +13,22 @@
     </facet>
   </component>
   <component name="NewModuleRootManager">
-    <content url="file://$MODULE_DIR$">
-      <excludeFolder url="file://$MODULE_DIR$/env" />
-      <excludeFolder url="file://$MODULE_DIR$/venv" />
+    <content url="file://$MODULE_DIR$/backend">
+      <excludeFolder url="file://$MODULE_DIR$/backend/env" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.9 (tatar_analysis)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.8 (tatar_analysis)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+  <component name="PyNamespacePackagesService">
+    <option name="namespacePackageFolders">
+      <list>
+        <option value="$MODULE_DIR$/backend/core" />
+        <option value="$MODULE_DIR$/backend/parsers" />
+        <option value="$MODULE_DIR$/backend/tatar_analysis" />
+      </list>
+    </option>
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Django" />
-    <option name="TEMPLATE_FOLDERS">
-      <list>
-        <option value="$MODULE_DIR$/../tatar_analysis\templates" />
-      </list>
-    </option>
   </component>
 </module>

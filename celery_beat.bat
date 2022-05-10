@@ -1,1 +1,0 @@
-celery -A tatar_analysis beat -l info
