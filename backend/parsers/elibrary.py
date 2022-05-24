@@ -39,6 +39,7 @@ def extract_all_links():
 
     next_page = driver.find_element(By.XPATH, '//a[text()=">>"]')
     while next_page:
+        time.sleep(5)
         next_page.click()
         all_links += extract_links_from_page()
         try:
@@ -60,18 +61,18 @@ def parse_page(link):
 
 if __name__ == '__main__':
     authorize()
+
+    get_anrt_page()
+    links = extract_all_links()
+
+    with open("links.txt", "w") as txt_file:
+        for link in links:
+            txt_file.write(f'{link}\n')
+
+    # links = []
     #
-    # get_anrt_page()
-    # links = extract_all_links()
+    # with open("links.txt", "r") as txt_file:
+    #     links = txt_file.readlines()
     #
-    # with open("links.txt", "w") as txt_file:
-    #     for link in links:
-    #         txt_file.write(f'{link}\n')
-
-    links = []
-
-    with open("links.txt", "r") as txt_file:
-        links = txt_file.readlines()
-
-    for link in links:
-        parse_page(link.replace('\n', ''))
+    # for link in links:
+    #     parse_page(link.replace('\n', ''))
