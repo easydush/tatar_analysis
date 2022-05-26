@@ -2,7 +2,18 @@ from py_tat_morphan.morphan import Morphan
 
 analyser = Morphan()
 
-original = open('resources/part.txt', 'r', encoding='utf-8')
-original = original.read()
+# part = open('resources/part.txt', 'r', encoding='utf-8')
+# part = part.read()
+# print(part)
+# print(analyser.process_text(part))
+
+original = open('resources/full.txt', 'r', encoding='utf-8')
+original = original.read().replace('-', ' ').replace('.', ' ').replace(',', ' ')
+original = original.split()
+
+lemmas = []
 print(original)
-print(analyser.process_text(original))
+for word in original:
+    lemma = analyser.lemma(word)
+    lemmas.append(lemma)
+    print(lemma[0])

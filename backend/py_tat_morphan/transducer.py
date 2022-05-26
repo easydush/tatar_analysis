@@ -177,6 +177,7 @@ class Transducer:
                 inputline = Indexlist(string) # wrap the input in an indexing container
         except:
             print(1)
+            return
             if not isinstance(string, str):
                 inputline = Indexlist(str(string, "utf-8"))
             else:
