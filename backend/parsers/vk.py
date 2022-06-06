@@ -15,9 +15,11 @@ class VKParser:
         self.ACCESS_TOKEN = config('ACCESS_TOKEN')
 
     def parse_group(self, vk_id):
+        # Запрос на получение информации о сообществах
+        # ACCESS_TOKEN - сервисный ключ доступа
         response = self.api.groups.getById(access_token=self.ACCESS_TOKEN, v='5.81',
                                            lang='ru', group_ids=vk_id,
-                                           fields='description,members_count,verified,site,cover')
+                                           fields='description,members_count,site')
         response = response[0]
         try:
             group = VKGroup.objects.get(vk_id=response['id'])

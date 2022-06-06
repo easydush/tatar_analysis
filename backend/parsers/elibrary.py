@@ -51,6 +51,9 @@ def extract_all_links():
 def parse_page(link):
     driver.get(link)
     try:
+        title = driver.find_element(By.XPATH, '//table[0]/tbody/tr/td[2]/span/b/p/text()')
+        author = driver.find_element(By.XPATH, '//table[1]/tbody/tr/td[2]/span/text()')
+        year =  driver.find_element(By.XPATH, '//table[2]/tbody/tr[3]/td/font/text()')
         file = driver.find_element(By.XPATH, '//*[starts-with(text(),"Полный текст")]')
     except NoSuchElementException:
         return
@@ -63,11 +66,11 @@ if __name__ == '__main__':
     authorize()
 
     get_anrt_page()
-    links = extract_all_links()
-
-    with open("links.txt", "w") as txt_file:
-        for link in links:
-            txt_file.write(f'{link}\n')
+    # links = extract_all_links()
+    #
+    # with open("links.txt", "w") as txt_file:
+    #     for link in links:
+    #         txt_file.write(f'{link}\n')
 
     # links = []
     #
