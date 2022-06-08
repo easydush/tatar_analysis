@@ -12,6 +12,7 @@ driver = webdriver.Chrome()
 wait = WebDriverWait(driver, 10)
 pdf_file = open("pdfs.txt", "w")
 
+
 def authorize():
     driver.get('http://www.elibrary.ru')
     login = driver.find_element(By.ID, 'login')
@@ -53,12 +54,12 @@ def parse_page(link):
     try:
         title = driver.find_element(By.XPATH, '//table[0]/tbody/tr/td[2]/span/b/p/text()')
         author = driver.find_element(By.XPATH, '//table[1]/tbody/tr/td[2]/span/text()')
-        year =  driver.find_element(By.XPATH, '//table[2]/tbody/tr[3]/td/font/text()')
+        year = driver.find_element(By.XPATH, '//table[2]/tbody/tr[3]/td/font/text()')
         file = driver.find_element(By.XPATH, '//*[starts-with(text(),"Полный текст")]')
     except NoSuchElementException:
         return
     file.click()
-    pdf_file.write(f'{driver.current_url}\n')
+    pdf_file.write(f'{driver.current_url},{title},{author},{year}\n')
     time.sleep(5)
 
 
