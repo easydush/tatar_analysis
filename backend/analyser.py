@@ -7,7 +7,7 @@ analyser = Morphan()
 # print(part)
 # print(analyser.process_text(part))
 
-original = open('resources/full.txt', 'r', encoding='utf-8')
+original = open('resources/full1.txt', 'r', encoding='utf-8')
 original = original.read().replace('-', ' ').replace('.', ' ').replace(',', ' ')
 original = original.split()
 
