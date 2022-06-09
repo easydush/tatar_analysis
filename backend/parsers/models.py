@@ -3,6 +3,7 @@ from django.db import models
 MAX_LENGTH = 255
 VK_URL = 'https://vk.com'
 
+
 # VK models
 class VKSource(models.Model):
     name = models.CharField(max_length=MAX_LENGTH)
@@ -49,3 +50,14 @@ class VKPost(models.Model):
     def save_as_vk_post(self, *args, **kwargs):
         self.address = f'{VK_URL}/wall-{self.owner.vk_id}_{self.id}'
         super(VKPost, self).save(*args, **kwargs)
+
+
+class Publication(models.Model):
+    author = models.CharField(max_length=MAX_LENGTH)
+    link = models.URLField()
+    year = models.PositiveIntegerField()
+    title = models.CharField(max_length=MAX_LENGTH)
+    text = models.TextField()
+
+    def __str__(self):
+        return f'{self.author}| {self.title}'
