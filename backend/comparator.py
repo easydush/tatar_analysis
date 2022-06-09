@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 import time
+from collections import Counter
 
 from py_tat_morphan.morphan import Morphan
 
@@ -22,9 +23,9 @@ def canonize(source):
                   u'ләкин', u'мәгәр', u'нәкъ', u'ни', u'янә',
                   u'тик', u'һәр', u'яисә', u'яки',
                   u'гына', u'бары', u'фәкать')
-
-    return ([analyser.lemma(x)[0] for x in [y.strip(stop_symbols) for y in source.lower().split()] if
-             x and (x not in stop_words)])
+    lemmas = [analyser.lemma(x)[0] for x in [y.strip(stop_symbols) for y in source.lower().split()] if
+              x and (x not in stop_words)]
+    return [lemma for lemma in lemmas if lemma != 'NR']
 
 
 def get_shingles(source):
@@ -32,16 +33,25 @@ def get_shingles(source):
     out = []
     for i in range(len(source) - (shingle_len - 1)):
         out.append(binascii.crc32(' '.join([x for x in source[i:i + shingle_len]]).encode('utf-8')))
-
     return out
 
 
 def get_unique_shingles(source):
     import binascii
     out = []
-    for i in range(len(source) - (shingle_len - 1)):
+    for i in range(0, len(source), shingle_len):
         out.append(binascii.crc32(' '.join([x for x in source[i:i + shingle_len]]).encode('utf-8')))
+    return out
 
+
+def get_recents(source):
+    out = list(Counter(source).keys())
+    return out[:int(len(source) * 0.3)]
+
+
+def get_sorted_recents(source):
+    out = list(Counter(source).keys())
+    out = sorted(out[:21])
     return out
 
 
@@ -58,15 +68,41 @@ shingle_len = 5  # длина шингла
 
 
 def main():
-    time_req = time.time()
-    with open('resources/full2.txt', 'r', encoding="utf-8") as file1:
+    with open('resources/full1.txt', 'r', encoding="utf-8") as file1:
         with open('resources/mixed15.txt', 'r', encoding="utf-8") as file2:
             text1 = file1.read()
             text2 = file2.read()
-    cmp1 = get_shingles(canonize(text1))
-    print(cmp1)
-    cmp2 = get_shingles(canonize(text2))
-    print(canonize(text1))
+    text1 = canonize(text1)
+    text2 = canonize(text2)
+
+    print('Метод шинглов/n')
+    time_req = time.time()
+    cmp1 = get_shingles(text1)
+    cmp2 = get_shingles(text2)
+    print(compaire(cmp1, cmp2), '%')
+    time_req = time.time() - time_req
+    print("Потрачено:", time_req, "секунд")
+
+    print('Метод уникальных шинглов/n')
+    time_req = time.time()
+    cmp1 = get_unique_shingles(text1)
+    cmp2 = get_unique_shingles(text2)
+    print(compaire(cmp1, cmp2), '%')
+    time_req = time.time() - time_req
+    print("Потрачено:", time_req, "секунд")
+
+    print('Метод сравнения наиболее встречающихся/n')
+    time_req = time.time()
+    cmp1 = get_recents(text1)
+    cmp2 = get_recents(text2)
+    print(compaire(cmp1, cmp2), '%')
+    time_req = time.time() - time_req
+    print("Потрачено:", time_req, "секунд")
+
+    print('Комбинация методов/n')
+    time_req = time.time()
+    cmp1 = get_sorted_recents(text1)
+    cmp2 = get_sorted_recents(text2)
     print(compaire(cmp1, cmp2), '%')
     time_req = time.time() - time_req
     print("Потрачено:", time_req, "секунд")
