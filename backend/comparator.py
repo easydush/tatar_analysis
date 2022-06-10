@@ -41,8 +41,8 @@ shingle_len = 5  # длина шингла
 
 
 def main():
-    with open('resources/full2.txt', 'r', encoding="utf-8") as file1:
-        with open('resources/mixed15.txt', 'r', encoding="utf-8") as file2:
+    with open('resources/full3.txt', 'r', encoding="utf-8") as file1:
+        with open('resources/mixed50.txt', 'r', encoding="utf-8") as file2:
             text1 = file1.read()
             text2 = file2.read()
     text1 = canonize(text1)
