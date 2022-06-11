@@ -7,7 +7,7 @@
 
             <el-main>
                 <el-input
-                    v-model="input"
+                    v-model="text"
                     autosize
                     type="textarea"
                     placeholder="Введите текст"
@@ -16,7 +16,7 @@
             </el-main>
 
             <el-row class="mb-4" justify="end">
-                <el-button type="primary">Отправить</el-button>
+                <el-button type="primary" @click="check(text)">Отправить</el-button>
             </el-row>
         </el-container>
     </div>
@@ -24,6 +24,7 @@
 
 <script>
 import { ElContainer, ElHeader, ElMain, ElInput } from 'element-plus';
+import { mapActions, mapGetters } from 'vuex';
 import HeaderComponent from './components/Header';
 
 export default {
@@ -37,8 +38,19 @@ export default {
     },
     data() {
         return {
-            input: null,
+            text: null,
         };
+    },
+    computed: {
+        ...mapGetters(['results']),
+    },
+    methods: {
+        ...mapActions({
+            checkText: 'checkText',
+        }),
+        check(text) {
+            this.checkText(text);
+        },
     },
 };
 </script>
