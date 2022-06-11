@@ -14,7 +14,7 @@ analyser = Morphan()
 
 
 def canonize(source):
-    stop_symbols = '.,!?:;-\n\r()'
+    stop_symbols = '.,!?:;-\n\r()«—»'
 
     stop_words = (u'həм', u'əгəр', u'ə', u'әллә', u'әмма',
                   u'чөнки', u'гүя', u'хəтта', u'гəрчə',

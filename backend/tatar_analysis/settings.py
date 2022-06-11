@@ -26,7 +26,12 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:8080",
+    "http://localhost:8080",
+]
+CORS_ALLOW_CREDENTIALS = True
 
 # Application definition
 
@@ -41,12 +46,14 @@ INSTALLED_APPS = [
     'core',
     'parsers',
     'rest_framework',
+    'corsheaders',
     'drf_yasg'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -148,9 +155,8 @@ CELERY_CONFIG = dict(
 BROKER_TRANSPORT_OPTIONS = config('BROKER_TRANSPORT_OPTIONS')
 
 REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
+    # Use Django's standard `django.contrib.auth` ¬permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
