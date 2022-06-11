@@ -6,18 +6,32 @@
             </el-header>
 
             <el-main>
-                <el-input
-                    v-model="text"
-                    autosize
-                    type="textarea"
-                    placeholder="Введите текст"
-                    clearable
-                />
+                <el-row justify="center">
+                    <el-col :span="18">
+                        <el-input
+                            v-model="text"
+                            type="textarea"
+                            placeholder="Введите текст"
+                            clearable
+                        />
+                    </el-col>
+                </el-row>
+                <el-row justify="end" style="margin: 20px">
+                    <el-col :span="9">
+                        <el-button type="secondary" @click="check(text)">Прикрепить файл</el-button>
+                        <el-button type="primary" @click="check(text)">Отправить</el-button>
+                    </el-col>
+                </el-row>
+                <el-row
+                    justify="center"
+                    style="margin: 20px 0"
+                    v-for="(key, value) in results"
+                    :key="key"
+                >
+                    <el-col :span="6" :style="`text-align: left`">{{ value }}</el-col>
+                    <el-col :span="16">{{ key }}</el-col>
+                </el-row>
             </el-main>
-
-            <el-row class="mb-4" justify="end">
-                <el-button type="primary" @click="check(text)">Отправить</el-button>
-            </el-row>
         </el-container>
     </div>
 </template>
@@ -62,5 +76,9 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
+}
+
+textarea {
+    height: 50vh;
 }
 </style>

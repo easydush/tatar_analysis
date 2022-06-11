@@ -8,13 +8,15 @@ import axios from 'axios';
 const app = createApp(App);
 const store = new Vuex.Store({
     state: {
-        results: [],
+        results: {},
     },
     actions: {
         // eslint-disable-next-line no-unused-vars
         checkText: function ({ commit }, text) {
-            axios.post(`http://localhost:8000/check/`, { text }).then(
-                () => store.dispatch('setResults', this.state),
+            axios.post(`http://localhost:8000/check/`, text).then(
+                (response) => {
+                    commit('SET_RESULTS', { results: response.data });
+                },
                 (err) => {
                     console.log(err);
                 },
