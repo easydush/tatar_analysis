@@ -9,6 +9,7 @@
                 <el-row justify="center">
                     <el-col :span="18">
                         <el-input
+                            ref="text"
                             v-model="text"
                             type="textarea"
                             placeholder="Введите текст"
@@ -16,11 +17,25 @@
                         />
                     </el-col>
                 </el-row>
-                <el-row justify="end" style="margin: 20px">
-                    <el-col :span="9">
-                        <el-button type="secondary" @click="check(text)">Прикрепить файл</el-button>
+                <el-row justify="end" style="margin: 20px 0">
+                    <el-col :span="4">
+                        <el-upload
+                            ref="upload"
+                            name="upload"
+                            id="upload"
+                            accept=".pdf,.txt,.doc,.docx"
+                            :limit="1"
+                            @change="handleFile"
+                            :auto-upload="false"
+                            :on-exceed="handleExceed"
+                        >
+                            <el-button type="secondary">Прикрепить файл</el-button>
+                        </el-upload>
+                    </el-col>
+                    <el-col :span="4">
                         <el-button type="primary" @click="check(text)">Отправить</el-button>
                     </el-col>
+                    <el-col :span="2"></el-col>
                 </el-row>
                 <el-row
                     justify="center"
@@ -37,7 +52,7 @@
 </template>
 
 <script>
-import { ElContainer, ElHeader, ElMain, ElInput } from 'element-plus';
+import { ElContainer, ElHeader, ElMain, ElInput, genFileId } from 'element-plus';
 import { mapActions, mapGetters } from 'vuex';
 import HeaderComponent from './components/Header';
 
@@ -61,9 +76,20 @@ export default {
     methods: {
         ...mapActions({
             checkText: 'checkText',
+            checkFile: 'checkFile',
         }),
         check(text) {
             this.checkText(text);
+        },
+        handleFile(file) {
+            this.$refs.text.clear();
+            if (file['status'] === 'ready') this.checkFile(file.raw);
+        },
+        handleExceed(files) {
+            this.$refs.upload?.clearFiles();
+            const file = files[0];
+            file.uid = genFileId();
+            this.$refs.upload?.handleStart(file);
         },
     },
 };

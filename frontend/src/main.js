@@ -22,6 +22,25 @@ const store = new Vuex.Store({
                 },
             );
         },
+        checkFile: function ({ commit }, file) {
+            let formData = new FormData();
+            console.log(file);
+            formData.append('file', file);
+            axios
+                .post(`http://localhost:8000/check/`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                })
+                .then(
+                    (response) => {
+                        commit('SET_RESULTS', { results: response.data });
+                    },
+                    (err) => {
+                        console.log(err);
+                    },
+                );
+        },
     },
     mutations: {
         SET_RESULTS: (state, { results }) => {
