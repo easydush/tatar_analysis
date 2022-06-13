@@ -13,8 +13,12 @@ from comparator import canonize
 @permission_classes((permissions.AllowAny,))
 def check_view(request):
     results = {}
-
-    text1 = request.body.decode('utf-8')
+    file = request.FILES.get('file', None)
+    if file:
+        text1 = file.read().decode("utf-8")
+        print(text1)
+    else:
+        text1 = ''.join(request.data.keys())
 
     with open('resources/full_merged.txt', 'r', encoding="utf-8") as file2:
         text2 = file2.read()
@@ -22,13 +26,13 @@ def check_view(request):
     text1 = canonize(text1)
     text2 = canonize(text2)
 
-    results['Канонизированный текст:'] = ' '.join(text1)
+    results['Обработанный текст:'] = ' '.join(text1)
     if not len(text1):
         return Response(status=HTTP_400_BAD_REQUEST, data='Text is too short')
 
-    results['Метод шинглов:'] = shingles(text1, text2)
-    results['Метод уникальных шинглов:'] = unique_shingles(text1, text2)
-    results['Метод наиболее встречающихся:'] = recents(text1, text2)
-    results['Комбинация методов:'] = combined(text1, text2)
+    results['Метод шинглов:'] = round(shingles(text1, text2), 2)
+    results['Метод уникальных шинглов:'] = round(unique_shingles(text1, text2), 2)
+    results['Метод наиболее встречающихся:'] = round(recents(text1, text2), 2)
+    results['Комбинация методов:'] = round(combined(text1, text2), 2)
 
     return Response(results)
